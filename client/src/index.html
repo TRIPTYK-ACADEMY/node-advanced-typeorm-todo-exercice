@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <title>Home Page</title>
+</head>
+
+<body class="bg-gray-50">
+
+    <!--login view -->
+    <div class="hidden" id="login">
+        <include src="./src/views/login.html"></include>
+    </div>
+    <!-- register view -->
+    <div class="hidden" id="register">
+        <include src="./src/views/register.html"></include>
+    </div>
+    <!-- todos view -->
+    <div class="hidden" id="todos">
+        <include src="./src/views/todos.html"></include>
+    </div>
+    <!-- ADD todo view -->
+    <div class="hidden" id="add_todos">
+        <include src="./src/views/add_todo.html"></include>
+    </div>
+    <!-- categories view -->
+    <div class="hidden" id="categories">
+        <include src="./src/views/categories.html"></include>
+    </div>
+    <!-- add categories view -->
+    <div class="hidden">
+        <include src="./src/views/addcategories.html"></include>
+    </div>
+
+    <script src="./scripts/index.ts"></script>
+</body>
+
+</html>

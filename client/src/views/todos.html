@@ -1,0 +1,25 @@
+<include src="./src/views/partials/nav.html"></include>
+<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="flex flex-col">
+        <h2 class="mt-6 text-center text-4xl text-gray-800">
+            Todos list
+        </h2>
+        <div class="flex justify-center items-center mt-8">
+
+            <div class="ml-16">
+                <label for="location" class="block text-2xl text-center font-medium text-gray-700">Category</label>
+                <select id="location" name="location"
+                    class="mt-1 block w-full pl-3 pr-32 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+
+                </select>
+            </div>
+        </div>
+        <div class="flex justify-center mt-8">
+            <div class="bg-white shadow-xl rounded-lg w-1/2 max-w-2xl">
+                <ul class="divide-y divide-gray-300" id="todos_list">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

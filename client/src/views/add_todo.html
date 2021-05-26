@@ -1,0 +1,48 @@
+<include src="./src/views/partials/nav.html"></include>
+<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+  <form id="addTodoForm" class="flex flex-col items-center">
+    <h2 class="mt-6 text-center text-4xl text-gray-800">
+      Add todo
+    </h2>
+    <div class="flex justify-center items-center mt-8 w-1/2">
+      <div class="w-full">
+        <label for="name" class="block text-2xl font-medium text-gray-700">Name</label>
+        <div class="mt-1">
+          <input type="text" name="title" id="title"
+            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            placeholder="Send email to ...">
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-start mt-8 w-1/2">
+      <div class="w-3/4">
+        <label for="description" class="block text-2xl font-medium text-gray-700">Description</label>
+        <div class="mt-1">
+          <textarea rows="8" name="description" id="description"
+            class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            placeholder="Add a description"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-start items-end mt-8 w-1/2">
+      <div class="flex justify-between items-end w-3/4">
+        <div>
+          <label for="location" class="block text-2xl font-medium text-gray-700">Category</label>
+          <select id="category" name="category"
+            class="mt-1 block w-full pl-3 pr-32 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+
+          </select>
+        </div>
+
+        <button type="submit"
+          class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+          Save todo
+        </button>
+
+      </div>
+    </div>
+    <div class="flex justify-start mt-16 w-1/2">
+
+    </div>
+  </form>
+</div>
