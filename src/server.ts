@@ -1,12 +1,12 @@
 import { config } from 'dotenv';
 import { app } from './app.bootstrap';
-import { DatabasConnector } from './app.database';
+import { DatabaseConnector } from './app.database';
 
-config({path:'variables.env'});
+config({ path: 'variables.env' });
 
 const init = async () =>{
 
-    const db = await DatabasConnector.initDatabase();
+    const db = await DatabaseConnector.initDatabase();
     if(db){
         app.listen(process.env.PORT, ()=>{
             // eslint-disable-next-line no-console

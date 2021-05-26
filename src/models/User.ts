@@ -1,14 +1,17 @@
-import { plugin, prop, Ref } from '@typegoose/typegoose';
-import passportLocal from 'passport-local-mongoose';
+import { Column, Entity, OneToMany } from 'typeorm';
+import { BaseModel } from './base.model';
 import { Todo } from './Todo';
-@plugin(passportLocal, {
-    usernameField:'email'
-})
-class User{
-    @prop({required:true, unique:true})
-    public email?:string;
-    @prop({ref: ()=>Todo})
-    public todos?: Ref<Todo>[];
+
+@Entity()
+class User extends BaseModel {
+    @Column({
+        nullable:false,
+        unique:true
+    })
+    public email!:string;
+
+    @OneToMany(() => Todo, (todo) => todo.user)
+    public todos?: Todo[];
 }
 
 export{User};
