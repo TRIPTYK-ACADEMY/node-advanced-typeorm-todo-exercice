@@ -45,8 +45,11 @@
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.9",
+    "mysql2": "^2.2.5",
     "passport": "^0.4.1",
-    "passport-local-mongoose": "^6.1.0"
+    "passport-local-mongoose": "^6.1.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.32"
   },
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only  ./src/server.ts",

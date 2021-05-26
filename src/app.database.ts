@@ -1,18 +1,23 @@
-import { connect } from 'mongoose';
+import { createConnection } from 'typeorm';
 
 class DatabasConnector{
     static async initDatabase(){
         try{
-            return await connect(process.env.DB_URI ||'', {
-                useCreateIndex:true,
-                useFindAndModify:true,
-                useNewUrlParser:true,
-                useUnifiedTopology:true
+            const connection = await createConnection({
+                type: 'mysql',
+                username: 'root',
+                password: 'test',
+                host: 'localhost',
+                port: 3306,
+                database: 'todo_typeorm',
+                synchronize: true,
+                entities: []
             });
+            return connection;
         } catch(error){
             return false;
         }
     }
 }
 
-export {DatabasConnector};
+export { DatabasConnector };
