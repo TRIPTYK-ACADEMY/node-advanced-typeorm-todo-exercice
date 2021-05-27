@@ -45,14 +45,14 @@ class TodoController {
 
     static create = async (req: Request, res: Response) => {
         // const todo:Todo = new TodoController.model(req.body);
-        //  const { data: tokenUserId } = verify(
-        //      req.headers.authorization
-        //          ? req.headers.authorization.split(' ')[1]
-        //          : 'No auth',
-        //      process.env.JWT_SECRET || 'Potato'
-        //  ) as Record<string, any>;
+         const { data: tokenUserId } = verify(
+             req.headers.authorization
+                 ? req.headers.authorization.split(' ')[1]
+                 : 'No auth',
+             process.env.JWT_SECRET || 'Potato'
+         ) as Record<string, any>;
 
-        const user = await TodoController.userRepository!.findOne(1);
+        const user = await TodoController.userRepository!.findOne(tokenUserId);
         req.body.user = user;
         // req.body.categories = req.body.categories.map((e: string) => {return {id : e};});
         // [1,2]
