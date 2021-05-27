@@ -19,7 +19,7 @@ class AddTodoController{
         categories.forEach(category => {
             const option = document.createElement('option');
             option.text=category.title;
-            option.value=category._id;
+            option.value=category.id;
             cat_select.add(option);
         });
         Views.showView('add_todos'); 
@@ -35,11 +35,11 @@ class AddTodoController{
  async addTodo(e){
      e.preventDefault();
      const {description, title, category} = this.addTodoForm.elements;
-     const apiCall = (await APIRest.createTodo({description: description.value, title: title.value, category: category.value}));
+     const apiCall = (await APIRest.createTodo({description: description.value, title: title.value, categories: [category.value]}));
      if(apiCall){
         appRouter.navigate('/todos');
      };
  }
     
 }
-export {AddTodoController};
+export { AddTodoController };

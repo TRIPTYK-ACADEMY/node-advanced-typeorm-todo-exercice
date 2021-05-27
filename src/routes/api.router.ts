@@ -8,7 +8,7 @@ import { TodoValidator } from '../validators/TodoValidator';
 const apiRouter = Router();
 
 //DEFINE my Routes for todos
-apiRouter.get('/api/v1/todos', AuthController.authorize, TodoController.findAll);
+apiRouter.get('/api/v1/todos', /* AuthController.authorize, */ TodoController.findAll);
 apiRouter.get('/api/v1/todos/:id', catchErrors(TodoController.findById));
 apiRouter.post('/api/v1/todos', TodoValidator.getRules(), TodoValidator.validate, catchErrors(TodoController.create));
 apiRouter.put('/api/v1/todos/:id', TodoValidator.getRules(), TodoValidator.validate, catchErrors(TodoController.update));

@@ -1,33 +1,62 @@
-import { getModelForClass } from '@typegoose/typegoose';
-import { Request, response, Response } from 'express';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { Request, Response } from 'express';
+import { Repository } from 'typeorm';
 import { User } from '../../../models/User';
 
 
 class UserController {
-    static model = getModelForClass(User)
+    public static repository: Repository<User> | null = null;
 
-    static create = async(req:Request, res:Response) => {
-        return res.json({user: await UserController.model.register(req.body, req.body.password)});
-    }
+    static create = async (req: Request, res: Response) => {
+        const newUser = UserController.repository!.create(req.body);
+        await UserController.repository!.save(newUser);
+        return res.json({ user: newUser });
+    };
 
+    static findById = async (req: Request, res: Response) => {
+        const { id } = req.params;
+        const user = await UserController.repository!.findOne(id);
 
+        if (user === undefined) {
+            throw new Error('User not found');
+        }
 
+        return res.json(user);
+    };
+    static findAll = async (req: Request, res: Response) => {
+        const users = await UserController.repository!.find();
+        return res.json({ users });
+    };
 
-    static update = async(req:Request, res:Response) => {
-        const {id} = req.params;
-        return res.json(await UserController.model.updateOne({_id:id}, req.body));
-    }
-    static delete = async(req:Request, res:Response) => {
-        const {id} = req.params;
-        return res.json(await UserController.model.deleteOne({_id:id}));
-    }
-    static findById = async(req:Request, res:Response) => {
-        const {id} = req.params;
-        return res.json(await UserController.model.findOne({_id:id}));
-    }
-    static findAll= async (req:Request, res:Response) => {
-        return res.json({users:await UserController.model.find({})});
-     }
+    static update = async (req: Request, res: Response) => {
+        const { id } = req.params;
+        const user = await UserController.repository!.findOne(id, {
+            relations: ['todos']
+        });
+
+        if (user === undefined) {
+            throw new Error('User not found');
+        }
+
+        const mergedUser = UserController.repository!.merge(user, req.body);
+
+        await UserController.repository!.save(mergedUser);
+
+        return res.json(mergedUser);
+    };
+    static delete = async (req: Request, res: Response) => {
+        const { id } = req.params;
+        const user = await UserController.repository!.findOne(id);
+        if (user === undefined) {
+            throw new Error('User not found');
+        }
+        
+        await UserController.repository!.remove(user);
+
+        return res.json({
+            status : 'success'
+        });
+    };
 }
 
-export {UserController};
+export { UserController };

@@ -1,12 +1,19 @@
-import { getModelForClass } from '@typegoose/typegoose';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { NextFunction, Request, Response } from 'express';
 import { User } from '../../../models/User';
 import {sign, verify} from 'jsonwebtoken';
+import { getRepository, Repository } from 'typeorm';
 
 class AuthController {
-    static model = getModelForClass(User);
+    static userRepository: Repository<User> | null = null;
+
+    static init() {
+        AuthController.userRepository = getRepository(User);
+    }
+
+
     static login = async (req:Request, res:Response, next:NextFunction)=>{
-        const {user} = await AuthController.model.authenticate()(req.body.email, req.body.password);
+        const user = await AuthController.userRepository!.findOne({ email : req.body.email, password : req.body.password});
         if(user){
             // eslint-disable-next-line no-console
             console.log(user);
@@ -19,17 +26,17 @@ class AuthController {
             console.log(jwtToken);
             return res.json(jwtToken);
         } 
-            const err = new Error();
-            err.message = 'Bad credentials';
-            err.status=401;
-            next(err);     
+        const err = new Error();
+        err.message = 'Bad credentials';
+        err.status=401;
+        next(err);     
     }
 
     static authorize = async(req:Request, res:Response, next:NextFunction)=>{
     
         try{
             const jwtToken = req.headers.authorization?.split(' ')[1] || 'notoken';
-            const userId = await verify(jwtToken, process.env.JWT_SECRET);
+            const userId = await verify(jwtToken, process.env.JWT_SECRET || 'nojwt');
             next();
         }catch(e){
             const err = new Error('Bad token !!');
@@ -44,7 +51,7 @@ class AuthController {
     
         try{
             const jwtToken = req.headers.authorization?.split(' ')[1] || 'notoken';
-            const userId = await verify(jwtToken, process.env.JWT_SECRET);
+            const userId = await verify(jwtToken, process.env.JWT_SECRET || 'nojwt');
             return res.json({token:{isValid:true}});
         }catch(e){
             console.log('ok');

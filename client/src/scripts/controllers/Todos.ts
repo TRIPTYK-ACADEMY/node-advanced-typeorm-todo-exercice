@@ -31,6 +31,8 @@ class TodosController{
         // eslint-disable-next-line no-console
         console.log('render');
 
+        console.log(todos);
+
 
         //////TODOS///////////
         // const todos = (await APIRest.findAllTodos()).todos;
@@ -47,7 +49,7 @@ class TodosController{
                     </svg>
                 </button>
                 ${next.title}
-                <span class="text-xs rounded-lg bg-yellow-300 text-yellow-800 ml-4 px-3 py-1">${next.category.title}</span>
+                <span class="text-xs rounded-lg bg-yellow-300 text-yellow-800 ml-4 px-3 py-1">${next.categories.map(e => e.title).join(' ')}</span>
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current text-gray-300 ml-8"
                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -88,4 +90,4 @@ class TodosController{
         this.renderView(this.filteredTodos);
     }
 }
-export {TodosController};
+export { TodosController };

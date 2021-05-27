@@ -6,8 +6,8 @@ import { User } from '../models/User';
 class PassportConfig {
     static model = getModelForClass(User)
     static configure = (req:Request, res:Response, next:NextFunction) =>{
-      passport.initialize();
-      passport.use(PassportConfig.model.createStrategy());
+      // passport.initialize();
+      // passport.use(PassportConfig.model.createStrategy());
       next();
     }
 }
