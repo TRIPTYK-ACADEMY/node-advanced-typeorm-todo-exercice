@@ -15,32 +15,32 @@ class TodoController {
     }
 
     static findAll = async (req: Request, res: Response) => {
-        const {data} = verify(
+        const {data : userId} = verify(
             req.headers.authorization ? req.headers.authorization.split(' ')[1] : 'No auth',
             process.env.JWT_SECRET || 'Potato'
         ) as Record<string, any>;
-        
-        const user = await TodoController.userRepository!.findOne(data);
+
+        const queryBuilderForUser = TodoController.todoRepository!.createQueryBuilder(
+            'todo'
+        )
+            .select()
+            .leftJoinAndSelect('todo.categories', 'categories')
+            .leftJoinAndSelect('todo.user', 'todo_user')
+            .where('todo_user.id = :id_user', { id_user: userId });
+
 
         if (req.query.filterByCategory) {
-            const filteredByCategory = await TodoController.todoRepository!.find(
-                {
-                    relations: ['user', 'categories']
-                    // TODO : filter by User and category name
-                }
-            );
-
-            return res.json({
-                todos: filteredByCategory
-            });
+            // on récupère les todos en fonction de l'utilisateur connecté et en filtrant par un certain type de catégorie
+            const filteredTodos = await queryBuilderForUser
+                .andWhere('categories.id = :category_id', {
+                    category_id: req.query.filterByCategory
+                 })
+                .getMany();
+            
+            return res.json({ todos: filteredTodos });
         }
 
-        return res.json({
-            todos: await TodoController.todoRepository!.find({
-                relations: ['user', 'categories']
-                // TODO : filter by User
-            })
-        });
+        return res.json({ todos: await queryBuilderForUser.getMany() });
     };
 
     static create = async (req: Request, res: Response) => {

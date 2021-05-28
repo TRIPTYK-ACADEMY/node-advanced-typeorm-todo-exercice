@@ -18,7 +18,7 @@ class TodosController{
         categories.forEach(category => {
             const option = document.createElement('option');
             option.text=category.title;
-            option.value=category._id;
+            option.value=category.id;
             cat_select.add(option);
         });
         cat_select.addEventListener('change', this.filterTodos.bind(this));
@@ -86,6 +86,8 @@ class TodosController{
         ///FRONT filter
         // this.filteredTodos = this.todos.filter((todo)=>todo.category._id === id);
         //BACK filter
+        console.log(id);
+
         this.filteredTodos = (await APIRest.findAllTodos(id)).todos;
         this.renderView(this.filteredTodos);
     }
