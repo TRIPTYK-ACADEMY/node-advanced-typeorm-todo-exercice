@@ -9,7 +9,7 @@ import { User } from './models/User';
 
 config({ path: 'variables.env' });
 
-const init = async () =>{
+export const initApp = async () =>{
 
     const db = await DatabaseConnector.initDatabase();
 
@@ -28,6 +28,5 @@ const init = async () =>{
         console.log('There was an error in the database connection');
     }
     
+    return app;
 };
-
-init();
